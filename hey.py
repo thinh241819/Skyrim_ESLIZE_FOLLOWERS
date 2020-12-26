@@ -8,11 +8,40 @@ prev_formID = str(input())
 print("Please enter your new form-ID: ")
 new_formID = str(input())
 
-nif_path = os.path.join(file_path, "meshes\Actors\Character\FaceGenData\FaceGeom\amelia_rose_v3.esp")
+# Look in the directory for files with ".esp" extension
+# With the help of this guide
+# https://stackoverflow.com/questions/3964681/find-all-files-in-a-directory-with-extension-txt-in-python
+for file in os.listdir(file_path):
+    if file.endswith(".esp"):
+        esp_file = file
 
+# Create file path for the necessary files
+old_nif_path = os.path.join(file_path, "meshes\Actors\Character\FaceGenData\FaceGeom", esp_file, prev_formID + ".nif")
+old_tga_path = os.path.join(file_path, "textures\Actors\Character\FaceGenData\FaceTint", esp_file, prev_formID + ".tga")
+old_dds_path = os.path.join(file_path, "textures\Actors\Character\FaceGenData\FaceTint", esp_file, prev_formID + ".dds")
+
+new_nif_path = os.path.join(file_path, "meshes\Actors\Character\FaceGenData\FaceGeom", esp_file, new_formID + ".nif")
+new_tga_path = os.path.join(file_path, "textures\Actors\Character\FaceGenData\FaceTint", esp_file, new_formID + ".tga")
+new_dds_path = os.path.join(file_path, "textures\Actors\Character\FaceGenData\FaceTint", esp_file, new_formID + ".dds")
+
+# Check if the file exists and rename the files
+# With the help of this guide
+# https://www.tutorialspoint.com/python/os_rename.htm
+if os.path.exists(old_dds_path):
+    os.rename(old_dds_path, new_dds_path)
+if os.path.exists(old_tga_path):
+    os.rename(old_tga_path, new_tga_path)
+if os.path.exists(old_nif_path):
+    os.rename(old_nif_path, new_nif_path)
+
+# *************** START_SECTION 1 ***************
+# Open and write characters to "nif" binary files with normal characters
+# With the help of this guide
+# https://www.geeksforgeeks.org/python-program-to-modify-the-content-of-a-binary-file/
+# https://www.tutorialsteacher.com/python/python-read-write-file
 string = b""
 Flag = 0
-with open(os.path.join(file_path, prev_formID + ".nif"), 'rb+') as file:
+with open(new_nif_path, 'rb+') as file:
     # Read the content of the file character by character
     # Use this to initialize the loop
     data = string = file.read(1)
@@ -39,8 +68,8 @@ with open(os.path.join(file_path, prev_formID + ".nif"), 'rb+') as file:
                     # Overwrite it
                     file.write(new_formID.encode())
 
-
     if Flag:
         print("Found and replaced")
     else:
         print("not found!")
+# XXXXXXXXXXXXXXX START_SECTION 1 XXXXXXXXXXXXXXX
