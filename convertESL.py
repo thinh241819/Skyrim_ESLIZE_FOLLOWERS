@@ -1,16 +1,6 @@
-from tkinter import *
 import os
 
-# Ask for users path and relevant information to do the work
-print("Please enter your file path: ")
-file_path = input()
-print("Please enter your new form-ID: ")
-newID = str(input())
-
-if len(newID) != 8:
-    print("Sorry, cannot accept any number less than 8 digits")
-
-def convert_esl(new_formID):
+def convert_esl(new_formID, file_path):
     prev_formID = ""
     # Look in the directory for files with ".esp" extension
     # With the help of this guide
@@ -25,6 +15,7 @@ def convert_esl(new_formID):
             prev_formID = file.replace('.nif', '')
         if file.endswith(".NIF"):
             prev_formID = file.replace('.NIF', '')
+
     # Create file path for the necessary files
     old_nif_path = os.path.join(file_path, "meshes\Actors\Character\FaceGenData\FaceGeom", esp_file, prev_formID + ".nif")
     old_tga_path = os.path.join(file_path, "textures\Actors\Character\FaceGenData\FaceTint", esp_file, prev_formID + ".tga")
@@ -83,5 +74,3 @@ def convert_esl(new_formID):
         else:
             print("not found!")
 # XXXXXXXXXXXXXXX START_SECTION 1 XXXXXXXXXXXXXXX
-
-convert_esl(newID)
