@@ -17,8 +17,6 @@ class EntryBox:
         self.entry_path.grid(row=index, column=1)
         self.entry_path.insert(0, "Enter your follower's folder path")
 
-
-
 # Entry boxes
 box1 = EntryBox()
 box1.put_on_screen(0)
